@@ -6,6 +6,7 @@ defmodule RBMQ.Connection.Helper do
   """
   use AMQP
   require Logger
+  alias Confex.Resolver
 
   # Default settings for AMQP connection.
   @defaults [
@@ -51,13 +52,15 @@ defmodule RBMQ.Connection.Helper do
   @doc """
   Same as `open_connection!/1`, but returns {:ok, conn} or {:error, reason} tuples.
   """
+  def open_connection(nil), do: open_connection([])
   def open_connection(conn_opts) do
     Logger.debug "Establishing new AMQP connection, with opts: #{inspect conn_opts}"
 
-    conn = @defaults
-    |> Keyword.merge(conn_opts)
-    |> env
-    |> Connection.open
+    conn =
+      @defaults
+      |> Keyword.merge(conn_opts)
+      |> env
+      |> Connection.open
 
     case conn do
       {:ok, %Connection{}} = res ->
@@ -216,6 +219,6 @@ defmodule RBMQ.Connection.Helper do
   end
 
   defp env(var) do
-    Confex.process_env(var)
+    Resolver.resolve!(var)
   end
 end

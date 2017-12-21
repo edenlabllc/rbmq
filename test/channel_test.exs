@@ -4,8 +4,7 @@ defmodule RBMQ.ChannelTest do
   doctest RBMQ.Connection.Channel
 
   defmodule TestConnection do
-    use RBMQ.Connection,
-      otp_app: :rbmq
+    use RBMQ.Connection, otp_app: :rbmq
   end
 
   defmodule TestChannelSupervisor do

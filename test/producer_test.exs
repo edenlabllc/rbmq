@@ -5,14 +5,14 @@ defmodule RBMQ.ProducerTest do
   doctest RBMQ.Producer
 
   defmodule ProducerTestConnection do
-    use RBMQ.Connection,
-      otp_app: :rbmq
+    use RBMQ.Connection, otp_app: :rbmq
   end
 
   @queue "producer_test_qeueue"
 
   defmodule TestProducer do
     use RBMQ.Producer,
+      otp_app: :rbmq,
       connection: ProducerTestConnection,
       queue: [
         name: "producer_test_qeueue",

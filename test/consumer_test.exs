@@ -6,12 +6,12 @@ defmodule RBMQ.ConsumerTest do
   @queue "consumer_test_qeueue"
 
   defmodule ProducerTestConnection4Cons do
-    use RBMQ.Connection,
-      otp_app: :rbmq
+    use RBMQ.Connection, otp_app: :rbmq
   end
 
   defmodule TestProducer do
     use RBMQ.Producer,
+      otp_app: :rbmq,
       connection: ProducerTestConnection4Cons,
       queue: [
         name: "consumer_test_qeueue",
@@ -28,6 +28,7 @@ defmodule RBMQ.ConsumerTest do
 
   defmodule TestConsumer do
     use RBMQ.Consumer,
+      otp_app: :rbmq,
       connection: ProducerTestConnection4Cons,
       queue: [
         name: "consumer_test_qeueue",
